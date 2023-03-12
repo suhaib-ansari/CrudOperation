@@ -2,14 +2,11 @@ package com.crud.demo.controller;
 
 
 import com.crud.demo.model.User;
-
 import com.crud.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping(value = "/user")
