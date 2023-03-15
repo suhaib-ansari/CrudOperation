@@ -1,58 +1,45 @@
 package com.crud.demo.controller;
 
 
+import com.crud.demo.dto.UserDto;
 import com.crud.demo.model.User;
-import com.crud.demo.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import com.crud.demo.service.UserService;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
-@RequestMapping(value = "/user")
+import java.util.List;
+
+@RestController
+@RequestMapping(value = "/rest")
 public class UserController {
 
-    private final UserRepository userRepository;
+    public static final String CREATE_USER = "/create/user";
+    public static final String DELETE_USER = "/delete/user/{}";
+    private static final String GET_ALL_USER = "/getAllUser";
+    private UserService userService;
 
-    @Autowired
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
-    @GetMapping("/signup")
-    public String showSignUpForm(Model model) {
-        model.addAttribute("user",new User());
-        model.addAttribute("users",userRepository.findAll());
-        return "index";
-    }
-
-    @PostMapping(value = "/addUser")
-    public String addUser(@ModelAttribute User user){
-        userRepository.save(user);
-        return "redirect:/user/getUser";
-    }
-
-    @GetMapping("/getUser")
-    public String getUsers(Model model){
-        model.addAttribute("user",new User());
-        model.addAttribute("users",userRepository.findAll());
-        return "index";
-    }
-
-    @GetMapping("delete/{id}")
-    public String deleteStudent(@PathVariable("id") long id, Model model) {
+    @PostMapping(value = CREATE_USER)
+    public ResponseEntity<String> createUser(@RequestBody UserDto userDto) throws Exception {
         try {
-            User user = userRepository.findById(id)
-                    .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-            userRepository.delete(user);
-
-            model.addAttribute("user", new User());
-            model.addAttribute("users", userRepository.findAll());
+            return new ResponseEntity<>(userService.createUser(userDto), HttpStatusCode.valueOf(200));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        catch (IllegalArgumentException e){
-            return "redirect:/user/signup";
-        }
-        return "index";
     }
 
+    @DeleteMapping(value = DELETE_USER)
+    public ResponseEntity<Long> deleteUser(@PathVariable("id") Long id){
+        return new ResponseEntity<>(userService.deleteUser(id),HttpStatusCode.valueOf(200));
+    }
+
+    @GetMapping(value =  GET_ALL_USER)
+    public ResponseEntity<List<User>> getAllUser(){
+        return new ResponseEntity<>(userService.getAllUser(),HttpStatusCode.valueOf(200));
+    }
 }
