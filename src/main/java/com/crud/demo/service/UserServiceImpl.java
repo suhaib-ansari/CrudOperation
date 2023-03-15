@@ -3,9 +3,11 @@ package com.crud.demo.service;
 import com.crud.demo.dto.UserDto;
 import com.crud.demo.model.User;
 import com.crud.demo.repository.UserRepository;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class UserServiceImpl implements UserService{
 
     private UserRepository userRepository;

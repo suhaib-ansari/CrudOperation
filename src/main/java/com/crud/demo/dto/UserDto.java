@@ -1,25 +1,21 @@
 package com.crud.demo.dto;
 
-public class UserDto {
-    private long id;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+public class UserDto {
+
+
+    @JsonProperty("user_name")
     private String userName;
 
+    @JsonProperty("user_id")
     private String userId;
 
     public UserDto(long id, String userName, String userId) {
-        this.id = id;
         this.userName = userName;
         this.userId = userId;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getUserName() {
         return userName;
@@ -40,7 +36,6 @@ public class UserDto {
     @Override
     public String toString() {
         return "UserDto{" +
-                "id=" + id +
                 ", userName='" + userName + '\'' +
                 ", userId='" + userId + '\'' +
                 '}';

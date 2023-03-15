@@ -15,7 +15,7 @@ import java.util.List;
 public class UserController {
 
     public static final String CREATE_USER = "/create/user";
-    public static final String DELETE_USER = "/delete/user/{}";
+    public static final String DELETE_USER = "/delete/user/{id}";
     private static final String GET_ALL_USER = "/getAllUser";
     private UserService userService;
 

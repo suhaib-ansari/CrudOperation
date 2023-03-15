@@ -1,20 +1,23 @@
 package com.crud.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 
 
 @Entity
+@Table(name = "Users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @JsonProperty("user_name")
+    @Column(name = "user_name")
     private String userName;
 
+    @JsonProperty("user_id")
+    @Column(name = "user_id")
     private String userId;
 
     public long getId() {
