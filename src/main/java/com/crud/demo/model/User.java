@@ -1,7 +1,8 @@
 package com.crud.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
+
+import javax.persistence.*;
 
 
 @Entity
